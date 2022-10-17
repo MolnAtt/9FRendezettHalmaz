@@ -54,8 +54,21 @@ namespace _9FRendezettHalmaz
 			public void Add(int elem)
 			{
 				// az elem helyét meg kell találni! mert oda kell berakni!
+				/** /
+				Console.Error.WriteLine("---------------------------------");
+				Console.Error.WriteLine($"Ezt kell beilleszteni: {elem}");
+				Console.Error.WriteLine($"Hozzáadás előtt: [{this} ]");
+				/**/
 				int hely_indexe = Helye(elem);
+				/** /
+				Console.Error.WriteLine($"Az elem helye: {hely_indexe}");
+				/**/
 				lista.Insert(hely_indexe, elem);
+				/** /
+				Console.Error.WriteLine($"Hozzáadás után: [{this} ]");
+				Console.Error.WriteLine("---------------------------------");
+				/**/
+				Count++; // ezt felejtettük el a múltkor!
 			}
 
 			public override string ToString()
@@ -68,34 +81,41 @@ namespace _9FRendezettHalmaz
 				return s;
 			}
 
+			public void Remove(int elem)
+			{
+				int hely = Helye(elem);
+				if (lista.Count<=hely)
+					return;
+
+				if (lista[hely]==elem)
+				{
+					lista.RemoveAt(hely);
+					Count--;
+				}
+			}
 		}
 
 		static void Main(string[] args)
 		{
 			List<int> lista = new List<int> { 3, 0, 1, 8, 7, 2, 5, 4, 6, 9 };
-
 			RendezettHalmaz rendeshalmaz = new RendezettHalmaz();
 			// nem szeretnénk ilyet megengedni
 			Console.WriteLine(rendeshalmaz.Count);
 
 			Console.WriteLine(rendeshalmaz);
 
-			rendeshalmaz.Add(6);
-			Console.WriteLine(rendeshalmaz);
-			rendeshalmaz.Add(2);
-			Console.WriteLine(rendeshalmaz);
-			rendeshalmaz.Add(7);
-			Console.WriteLine(rendeshalmaz);
-			rendeshalmaz.Add(1);
-			Console.WriteLine(rendeshalmaz);
-			rendeshalmaz.Add(9);
-			Console.WriteLine(rendeshalmaz);
+//			Random rnd = new Random();
+			for (int i = 0; i < lista.Count; i++)
+			{
+				rendeshalmaz.Add(lista[i]);
+			}
 
+			rendeshalmaz.Remove(15);
+
+			Console.WriteLine(rendeshalmaz);
 			Console.ReadKey();
 
-			/* Ezt később ki fogjuk törölni!*/
-
-
+			
 		}
 
 	}
