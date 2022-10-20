@@ -93,29 +93,97 @@ namespace _9FRendezettHalmaz
 					Count--;
 				}
 			}
+
+			public RendezettHalmaz Unio(RendezettHalmaz that)
+			{
+				RendezettHalmaz result = new RendezettHalmaz();
+
+				int i = 0;
+				int j = 0;
+
+				while (i < this.Count && j < that.Count)
+				{
+					if (this.lista[i] < that.lista[j])
+					{
+						result.lista.Add(this.lista[i]);
+						i++;
+					}
+					else if (this.lista[i] > that.lista[j])
+					{
+						result.lista.Add(that.lista[j]);
+						j++;
+					}
+					else
+					{
+						result.lista.Add(this.lista[i]);
+						result.lista.Add(that.lista[j]);
+						i++;
+						j++;
+					}
+					//Console.WriteLine(result);
+				}
+
+				//Console.WriteLine("kifogyott az valamelyik");
+				while (i < this.lista.Count)
+				{
+					result.lista.Add(this.lista[i]);
+					i++;
+					//Console.WriteLine(result);
+				}
+				//Console.WriteLine("kifogyott az első");
+
+				while (j < that.lista.Count)
+				{
+					result.lista.Add(that.lista[j]);
+					j++;
+					//Console.WriteLine(result);
+				}
+				//Console.WriteLine("kifogyott a második");
+				return result;
+			}
+
+			/*
+			public static RendezettHalmaz Unio(RendezettHalmaz egyik, RendezettHalmaz másik)
+			{
+				return egyik.Unio(másik);
+			}
+			*/
+			public static RendezettHalmaz Unio(RendezettHalmaz egyik, RendezettHalmaz másik) => egyik.Unio(másik);
+
+			public static RendezettHalmaz operator +(RendezettHalmaz egyik, RendezettHalmaz másik) => egyik.Unio(másik);
+
 		}
 
 		static void Main(string[] args)
 		{
-			List<int> lista = new List<int> { 3, 0, 1, 8, 7, 2, 5, 4, 6, 9 };
+			List<int> lista = new List<int> { 3, 0, 1, 8, 7, 2, 5, 4, 6, 9 , 40, 41, 42, 43, 43, 43, 43, 43, 43, 43, 54};
+			List<int> lista2 = new List<int> { 3, -2, 5, 9, -3, 2, -1, 4, 10, 15 };
 			RendezettHalmaz rendeshalmaz = new RendezettHalmaz();
-			// nem szeretnénk ilyet megengedni
-			Console.WriteLine(rendeshalmaz.Count);
+			RendezettHalmaz rendeshalmaz2 = new RendezettHalmaz();
 
-			Console.WriteLine(rendeshalmaz);
-
-//			Random rnd = new Random();
+			//			Random rnd = new Random();
 			for (int i = 0; i < lista.Count; i++)
 			{
 				rendeshalmaz.Add(lista[i]);
 			}
 
-			rendeshalmaz.Remove(15);
+			for (int i = 0; i < lista2.Count; i++)
+			{
+				rendeshalmaz2.Add(lista2[i]);
+			}
 
 			Console.WriteLine(rendeshalmaz);
-			Console.ReadKey();
+			Console.WriteLine(rendeshalmaz2);
 
-			
+			// Opciók arra, hogy hogyan lehetne egy uniót használni:
+			// 1. 
+			Console.WriteLine(rendeshalmaz.Unio(rendeshalmaz2));
+			// 2. 
+			Console.WriteLine(RendezettHalmaz.Unio(rendeshalmaz, rendeshalmaz2));
+			// 3. 
+			Console.WriteLine(rendeshalmaz + rendeshalmaz2);
+
+			Console.ReadKey();
 		}
 
 	}
